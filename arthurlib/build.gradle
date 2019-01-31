@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 27
@@ -31,4 +32,23 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+// DES: Maven配置
+uploadArchives {
+    repositories.mavenDeployer {
+        // DES: 打包导出路径
+        def mavenDirPath = file(getProperty('maven.dir.path'))
+        // DES: 配置路径
+        repository(url: "file://${mavenDirPath.absolutePath}")
+        // DES: 仓库配置
+        pom.project {
+            // DES: 包名
+            groupId "com.arthur.lib"
+            // DES: 仓库名
+            artifactId "arthurlib"
+            // DES: 版本号
+            version "0.0.1"
+        }
+    }
 }
